@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 LINUX ITEM - Free Fire Emotes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(255, 0, 0, 0.1) 50%, 
+                transparent 100%);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff0000, #ff4d00, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            color: #ff4d4d;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .total-count {
+            font-size: 1.2em;
+            color: #ff3333;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        .search-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .search-box {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: 2px solid #ff0000;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            outline: none;
+            width: 350px;
+            max-width: 90%;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        .search-box:focus {
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            transform: scale(1.02);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .search-box::placeholder {
+            color: #ff6666;
+        }
+        
+        .emote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 0 auto;
+        }
+        
+        .emote-card {
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(20, 0, 0, 0.9));
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .emote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 0, 0, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .emote-card:hover::before {
+            left: 100%;
+        }
+        
+        .emote-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.4);
+            border-color: rgba(255, 0, 0, 0.5);
+            background: linear-gradient(145deg, rgba(10, 0, 0, 0.9), rgba(30, 0, 0, 1));
+        }
+        
+        .emote-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            display: block;
+            border-radius: 10px;
+            object-fit: contain;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.3));
+        }
+        
+        .emote-card:hover .emote-image {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+        }
+        
+        .emote-id {
+            font-size: 1em;
+            font-weight: bold;
+            color: #ff3333;
+            margin-bottom: 8px;
+            word-break: break-all;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+        
+        .emote-icon {
+            font-size: 0.9em;
+            color: #ff6666;
+            margin-bottom: 15px;
+            min-height: 40px;
+            opacity: 0.9;
+        }
+        
+        /* Enhanced Copy Button */
+        .copy-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .copy-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .copy-button:hover {
+            background: linear-gradient(45deg, #ff3333, #ff0000);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+        }
+        
+        .copy-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+        }
+        
+        .copy-button.copied {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .copy-button.copied:hover {
+            background: linear-gradient(45deg, #33ff33, #00ff00);
+            box-shadow: 0 8px 25px rgba(0, 255, 0, 0.5);
+        }
+        
+        .loading {
+            text-align: center;
+            font-size: 1.5em;
+            color: #ff0000;
+            padding: 50px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .no-results {
+            text-align: center;
+            font-size: 1.5em;
+            color: #ff0000;
+            padding: 50px;
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin: 20px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #ff6666;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+        
+        /* Team Form Styles */
+        .team-form-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        .team-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        
+        .form-row label {
+            color: #ff4d4d;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-row input {
+            padding: 10px 15px;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-row input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .submit-btn {
+            grid-column: 1 / -1;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #ff3333, #ff0000);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+        }
+        
+        .submit-btn.loading {
+            background: linear-gradient(45deg, #ff9900, #ff6600);
+        }
+        
+        .submit-btn.success {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+        }
+        
+        h3 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #ff3333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        /* API Response Modal */
+        .api-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 0, 0, 0.95));
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        .modal-header h2 {
+            color: #ff3333;
+            font-size: 1.8em;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: #ff6666;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #ff0000;
+            transform: scale(1.2);
+        }
+        
+        .api-url-display {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            word-break: break-all;
+            font-family: monospace;
+        }
+        
+        .api-url-display .label {
+            color: #ff4d4d;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .api-url-display .url {
+            color: #00ff00;
+            font-size: 0.9em;
+        }
+        
+        .api-response {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .api-response .label {
+            color: #ff4d4d;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .api-response pre {
+            color: #00ff00;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .api-success {
+            color: #00ff00;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        .api-error {
+            color: #ff0000;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .emote-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .emote-card {
+                padding: 15px;
+            }
+            
+            .emote-image {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .emote-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .emote-image {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .search-box {
+                width: 90%;
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+        }
+        
+        /* Particle Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🎮 FREE FIRE EMOTES BY LINUX</h1>
+            <div class="subtitle">Browse All Free Fire Emotes Collection</div>
+            <div class="total-count" id="totalCount">Loading emotes...</div>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" 
+                   placeholder="🔍 Search emote by ID or name..." 
+                   onkeyup="searchEmotes()">
+        </div>
+        
+        <!-- Team Form -->
+        <div class="team-form-container">
+            <div class="team-form">
+                <h3>Team Configuration</h3>
+                <div class="form-row">
+                    <label for="teamCode">Team Code:</label>
+                    <input type="text" id="teamCode" placeholder="Enter team code">
+                </div>
+                <div class="form-row">
+                    <label for="uid1">UID 1:</label>
+                    <input type="text" id="uid1" placeholder="Enter UID 1">
+                </div>
+                <div class="form-row">
+                    <label for="uid2">UID 2:</label>
+                    <input type="text" id="uid2" placeholder="Enter UID 2">
+                </div>
+                <div class="form-row">
+                    <label for="uid3">UID 3:</label>
+                    <input type="text" id="uid3" placeholder="Enter UID 3">
+                </div>
+                <div class="form-row">
+                    <label for="uid4">UID 4:</label>
+                    <input type="text" id="uid4" placeholder="Enter UID 4">
+                </div>
+                <div class="form-row">
+                    <label for="uid5">UID 5:</label>
+                    <input type="text" id="uid5" placeholder="Enter UID 5">
+                </div>
+                <div class="form-row">
+                    <label for="uid6">UID 6:</label>
+                    <input type="text" id="uid6" placeholder="Enter UID 6">
+                </div>
+                <div class="form-row">
+                    <label for="emoteId">Emote ID:</label>
+                    <input type="text" id="emoteId" placeholder="Emote ID will be added here">
+                </div>
+                <button class="submit-btn" onclick="submitTeam()" id="submitBtn">Submit</button>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">Loading emotes...</div>
+        <div class="no-results" id="noResults">No emotes found matching your search.</div>
+        
+        <div class="emote-grid" id="emoteGrid">
+            <!-- Emotes will be loaded here -->
+        </div>
+        
+        <div class="footer">
+            © 2026 Free Fire Emotes Collection | By LINUX
+        </div>
+    </div>
+
+
+
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Initialize Particles.js with red and black theme
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: ["#ff0000", "#ff3333", "#cc0000", "#990000"] },
+                shape: { 
+                    type: ["circle", "triangle", "polygon"],
+                    polygon: { nb_sides: 6 }
+                },
+                opacity: { 
+                    value: 0.5, 
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: { 
+                    value: 3, 
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ff0000",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Emote data loaded from emote_ids.txt
+        const emoteData = [{ id: '909000001', name: 'Icon_Emote_Hello' },
+            { id: '909000002', name: 'Icon_Emote_LOL' },
+            { id: '909000003', name: 'Icon_Emote_Provoke' },
+            { id: '909000004', name: 'Icon_Emote_Clap' },
+            { id: '909000005', name: 'Icon_Emote_DAB' },
+            { id: '909000006', name: 'Icon_Emote_FunkyChicken' },
+            { id: '909000007', name: 'Icon_Emote_Wave' },
+            { id: '909000008', name: 'Icon_Emote_Shootdance' },
+            { id: '909000009', name: 'Icon_Emote_Babyshark' },
+            { id: '909000010', name: 'Icon_Emote_Valentine' },
+            { id: '909000011', name: 'Icon_Emote_Egypt' },
+            { id: '909000012', name: 'Icon_Emote_Bombsquad' },
+            { id: '909000013', name: 'Icon_Emote_Shuffle' },
+            { id: '909000014', name: 'Icon_Emote_GW' },
+            { id: '909000015', name: 'Icon_Emote_Dragons' },
+            { id: '909000016', name: 'Icon_Emote_PVEZombie' },
+            { id: '909000017', name: 'Icon_Emote_Jaguar' },
+            { id: '909000018', name: 'Icon_Emote_Cutthroat' },
+            { id: '909000019', name: 'Icon_Emote_Letsgroove' },
+            { id: '909000020', name: 'Icon_Emote_Apocalypse' },
+            { id: '909000021', name: 'Icon_Emote_Desert' },
+            { id: '909000022', name: 'Icon_Emote_Kickthemoon' },
+            { id: '909000023', name: 'Icon_Emote_WiggleWalk' },
+            { id: '909000024', name: 'Icon_Emote_EPHunter' },
+            { id: '909000025', name: 'Icon_Emote_EPHunter2' },
+            { id: '909000026', name: 'Icon_Emote_Boom' },
+            { id: '909000027', name: 'Icon_Emote_Splits' },
+            { id: '909000028', name: 'Icon_Emote_CraneKick' },
+            { id: '909000029', name: 'Icon_Emote_Partydance' },
+            { id: '909000031', name: 'Icon_Emote_PirateJig' },
+            { id: '909000032', name: 'Icon_Emote_Selfie' },
+            { id: '909000033', name: 'Icon_Emote_FlailingSwag' },
+            { id: '909000034', name: 'Icon_Emote_battleflag_pirate' },
+            { id: '909000035', name: 'Icon_Emote_Partydance' },
+            { id: '909000036', name: 'Icon_Emote_Djman' },
+            { id: '909000037', name: 'Icon_Emote_Antonio' },
+            { id: '909000038', name: 'Icon_Emote_Moco' },
+            { id: '909000039', name: 'Icon_Emote_Kelly' },
+            { id: '909000040', name: 'Icon_Emote_Miguel' },
+            { id: '909000041', name: 'Icon_Emote_kongfu' },
+            { id: '909000042', name: 'Icon_Emote_Saltbae' },
+            { id: '909000043', name: 'Icon_Emote_StrikePose1' },
+            { id: '909000044', name: 'Icon_Emote_Swans' },
+            { id: '909000045', name: 'Icon_Emote_Loveheart' },
+            { id: '909000046', name: 'Icon_Emote_tea' },
+            { id: '909000047', name: 'Icon_Emote_HitDemFolks' },
+            { id: '909000048', name: 'Icon_Emote_sorrow' },
+            { id: '909000049', name: 'Icon_Emote_Whirling' },
+            { id: '909000051', name: 'Icon_Emote_Shimmy' },
+            { id: '909000052', name: 'Icon_Emote_DanceWithDog' },
+            { id: '909000053', name: 'Icon_Emote_Glitch' },
+            { id: '909000054', name: 'Icon_Emote_Lasso' },
+            { id: '909000055', name: 'Icon_Emote_Jumpsuit1' },
+            { id: '909000056', name: 'Icon_Emote_Jumpsuit2' },
+            { id: '909000057', name: 'Icon_Emote_DustOff' },
+            { id: '909000058', name: 'Icon_Emote_Professor' },
+            { id: '909000059', name: 'Icon_Emote_Fight' },
+            { id: '909000060', name: 'Icon_Emote_BooyahDay' },
+            { id: '909000061', name: 'Icon_Emote_Bhangra' },
+            { id: '909000062', name: 'Icon_Emote_ElaborateBow' },
+            { id: '909000063', name: 'Icon_Emote_EvilDragon' },
+            { id: '909000064', name: 'Icon_Emote_Megapunch_Smile' },
+            { id: '909000065', name: 'Icon_Emote_BountyDance' },
+            { id: '909000066', name: 'Icon_Emote_BountyJump' },
+            { id: '909000067', name: 'Icon_Emote_Megapunch_Punch' },
+            { id: '909000068', name: 'Icon_Emote_SHARK' },
+            { id: '909000069', name: 'Icon_Emote_Football' },
+            { id: '909000070', name: 'Icon_Emote_Karate' },
+            { id: '909000071', name: 'Icon_Emote_Cobra_LeadEmote' },
+            { id: '909000072', name: 'Icon_Emote_Cobra_BooyahEmote' },
+            { id: '909000073', name: 'Icon_Emote_Cobra_Hitfloor' },
+            { id: '909000074', name: 'Icon_Emote_Cobra_Bicycle' },
+            { id: '909000075', name: 'Icon_Emote_Cobra_MP40' },
+            { id: '909000076', name: 'Icon_Emote_Corba_Onearm' },
+            { id: '909000077', name: 'Icon_Emote_Superstar' },
+            { id: '909000078', name: 'Icon_Emote_Cobra_Balloon' },
+            { id: '909000079', name: 'Icon_Emote_Cobra_Boxer' },
+            { id: '909000080', name: 'Icon_Emote_FFCC2021' },
+            { id: '909000081', name: 'Icon_Emote_Dragon' },
+            { id: '909000082', name: 'Icon_Emote_TwirlTiptoe' },
+            { id: '909000083', name: 'Icon_Emote_Greeting' },
+            { id: '909000084', name: 'Icon_Emote_ZombieRise' },
+            { id: '909000085', name: 'Icon_Emote_Thunder' },
+            { id: '909000086', name: 'Icon_Emote_Rampage' },
+            { id: '909000087', name: 'Icon_Emote_Cup' },
+            { id: '909000088', name: 'Icon_Emote_Supercar_Lean' },
+            { id: '909000089', name: 'Icon_Emote_Sutorito' },
+            { id: '909000090', name: 'Icon_Emote_Asianoni' },
+            { id: '909000091', name: 'Icon_Emote_BigWeapon' },
+            { id: '909000092', name: 'Icon_Emote_DanceShuffle' },
+            { id: '909000093', name: 'Icon_Emote_MocoMonth_Hacker' },
+            { id: '909000094', name: 'Icon_Emote_MocoMonth_UAV' },
+            { id: '909000095', name: 'Icon_Emote_Penguin' },
+            { id: '909000096', name: 'Icon_Emote_LegGuitar' },
+            { id: '909000097', name: 'Icon_Emote_Poof' },
+            { id: '909000098', name: 'Icon_Emote_Booyahday21_Gun' },
+            { id: '909000099', name: 'Icon_Emote_Booyahday21_Provocation' },
+            { id: '909000100', name: 'Icon_Partygame_Emote_5' },
+            { id: '909000101', name: 'Icon_Partygame_Emote_6' },
+            { id: '909000102', name: 'Icon_Partygame_Emote_3' },
+            { id: '909000103', name: 'Icon_Partygame_Emote_4' },
+            { id: '909000104', name: 'Icon_Partygame_Emote_7' },
+            { id: '909000105', name: 'Icon_Partygame_Emote_1' },
+            { id: '909000106', name: 'Icon_Partygame_Emote_8' },
+            { id: '909000107', name: 'Icon_Partygame_Emote_2' },
+            { id: '909000108', name: 'Icon_Emote_Greeting' },
+            { id: '909000109', name: 'Icon_Emote_Greeting' },
+            { id: '909000110', name: 'Icon_Emote_Greeting' },
+            { id: '909000111', name: 'Icon_Emote_Greeting' },
+            { id: '909000112', name: 'Icon_Emote_Greeting' },
+            { id: '909000113', name: 'Icon_Emote_Greeting' },
+            { id: '909000114', name: 'Icon_Emote_Greeting' },
+            { id: '909000115', name: 'Icon_Emote_Greeting' },
+            { id: '909000116', name: 'Icon_Emote_Greeting' },
+            { id: '909000117', name: 'Icon_Emote_Greeting' },
+            { id: '909000118', name: 'Icon_Emote_Greeting' },
+            { id: '909000119', name: 'Icon_Emote_Greeting' },
+            { id: '909000120', name: 'Icon_Emote_Greeting' },
+            { id: '909000121', name: 'Icon_Emote_Booyahday21_Basketball' },
+            { id: '909000122', name: 'Icon_Emote_LegGuitar' },
+            { id: '909000123', name: 'Icon_Emote_Sunglasses' },
+            { id: '909000124', name: 'Icon_Emote_Booyahday21_BooyahEmote' },
+            { id: '909000125', name: 'Icon_Emote_Booyahday21_LeadEmote' },
+            { id: '909000126', name: 'Icon_Emote_Max' },
+            { id: '909000127', name: 'Icon_Emote_BattleInStyle' },
+            { id: '909000128', name: 'Icon_Emote_UnionWar' },
+            { id: '909000129', name: 'Icon_Emote_Jumpsuit_Bag' },
+            { id: '909000130', name: 'Icon_Emote_Jumpsuit_Shoot' },
+            { id: '909000131', name: 'Icon_Emote_MJDance' },
+            { id: '909000132', name: 'Icon_Emote_Falconer' },
+            { id: '909000133', name: 'Icon_Emote_Fire' },
+            { id: '909000134', name: 'Icon_Emote_THagent' },
+            { id: '909000135', name: 'Icon_Emote_FingerGuessing' },
+            { id: '909000136', name: 'Icon_Emote_NewYearVR' },
+            { id: '909000137', name: 'Icon_Emote_Hurricane_Red' },
+            { id: '909000138', name: 'Icon_Emote_Hurricane_BBQ' },
+            { id: '909000139', name: 'Icon_Emote_Hurricane_Blue' },
+            { id: '909000140', name: 'Icon_Emote_Hoodedkiller_Blade' },
+            { id: '909000141', name: 'Icon_Emote_Hoodedkiller_Jump' },
+            { id: '909000142', name: 'Icon_Emote_BDcricket' },
+            { id: '909000143', name: 'Icon_Emote_BDcricket' },
+            { id: '909000144', name: 'Icon_Emote_Tiger' },
+            { id: '909000145', name: 'Icon_Emote_Asianoni_Drawing' },
+            { id: '909000150', name: 'Icon_Emote_Memes1' },
+            { id: '909033001', name: 'Icon_Emote_Flamedragon' },
+            { id: '909033002', name: 'Icon_Emote_Goldenwings' },
+            { id: '909033003', name: 'Icon_Emote_Songkran' },
+            { id: '909033004', name: 'Icon_Emote_Luchalibre_Stroke' },
+            { id: '909033005', name: 'Icon_Emote_Luchalibre_Beat' },
+            { id: '909033006', name: 'Icon_Emote_Fastbreaking22' },
+            { id: '909033007', name: 'Icon_Emote_FFWS2022' },
+            { id: '909033008', name: 'Icon_Emote_Boyband_AK' },
+            { id: '909033009', name: 'Icon_Emote_Boyband_Poker' },
+            { id: '909033010', name: 'Icon_Emote_FFWS2021' },
+            { id: '909034001', name: 'Icon_Emote_Rampage4_Book' },
+            { id: '909034002', name: 'Icon_Emote_Rampage4_Purple' },
+            { id: '909034003', name: 'Icon_Emote_Rampage4_Lead' },
+            { id: '909034004', name: 'Icon_Emote_Rampage4_Blue' },
+            { id: '909034005', name: 'Icon_Emote_Ridicule' },
+            { id: '909034006', name: 'Icon_Emote_BIS_Waggor' },
+            { id: '909034007', name: 'Icon_Emote_BIS_Command' },
+            { id: '909034008', name: 'Icon_Emote_Cyberwasp' },
+            { id: '909034009', name: 'Icon_Emote_Rhythmgirl' },
+            { id: '909034010', name: 'Icon_Emote_BR_Heroic' },
+            { id: '909034011', name: 'Icon_Emote_BR_Master' },
+            { id: '909034012', name: 'Icon_Emote_CS_Heroic' },
+            { id: '909034013', name: 'Icon_Emote_CS_Master' },
+            { id: '909034014', name: 'Icon_Emote_Marry' },
+            { id: '909035001', name: 'Icon_Emote_Digitaluniverse_Move' },
+            { id: '909035002', name: 'Icon_Emote_SINGERSB_03' },
+            { id: '909035003', name: 'Icon_Emote_SINGERSB_0203' },
+            { id: '909035004', name: 'Icon_Emote_SINGERSB_010203' },
+            { id: '909035005', name: 'Icon_Emote_CATeam' },
+            { id: '909035006', name: 'Icon_Emote_Digitaluniverse_Red' },
+            { id: '909035007', name: 'Icon_Emote_Digitaluniverse_Gun' },
+            { id: '909035008', name: 'Icon_Emote_Digitaluniverse_Purple' },
+            { id: '909035009', name: 'Icon_Emote_Digitaluniverse_Orange' },
+            { id: '909035010', name: 'Icon_Emote_Singers_1' },
+            { id: '909035011', name: 'Icon_Emote_Singers_2' },
+            { id: '909035012', name: 'Icon_Emote_Wildfire' },
+            { id: '909035013', name: 'Icon_Emote_Listen' },
+            { id: '909035014', name: 'Icon_Emote_Fcninja' },
+            { id: '909035015', name: 'Icon_Emote_UGC' },
+            { id: '909036001', name: 'Icon_Emote_Ghost_Move' },
+            { id: '909036002', name: 'Icon_Emote_Shiba_Freeze' },
+            { id: '909036003', name: 'Icon_Emote_Bartendert_Move' },
+            { id: '909036004', name: 'Icon_Emote_Griza_Camera' },
+            { id: '909036005', name: 'Icon_Emote_Griza_Boxing' },
+            { id: '909036006', name: 'Icon_Emote_Sun_Freeze' },
+            { id: '909036008', name: 'Icon_Emote_Skateboarding' },
+            { id: '909036009', name: 'Icon_Emote_Ghostface' },
+            { id: '909036010', name: 'Icon_Emote_CA' },
+            { id: '909036011', name: 'Icon_Emote_Undead_Freeze' },
+            { id: '909036012', name: 'Icon_Emote_Party' },
+            { id: '909036014', name: 'Icon_Emote_God' },
+            { id: '909037001', name: 'Icon_Emote_Deer_Move' },
+            { id: '909037002', name: 'Icon_Emote_VNSF' },
+            { id: '909037003', name: 'Icon_Emote_FFWS_Meteorites' },
+            { id: '909037004', name: 'Icon_Emote_FFWS_Trophies' },
+            { id: '909037005', name: 'Icon_Emote_FFWS_Dance' },
+            { id: '909037006', name: 'Icon_Emote_Eaten_Freeze' },
+            { id: '909037007', name: 'Icon_Emote_Hiphop' },
+            { id: '909037008', name: 'Icon_Emote_Juggling' },
+            { id: '909037009', name: 'Icon_Emote_Cards' },
+            { id: '909037010', name: 'Icon_Emote_FFWS_Book' },
+            { id: '909037011', name: 'Icon_Emote_Dragonclaws' },
+            { id: '909037012', name: 'Icon_Emote_Cdband' },
+            { id: '909038001', name: 'Icon_Emote_Piseiro' },
+            { id: '909038002', name: 'Icon_Emote_Macarena' },
+            { id: '909038003', name: 'Icon_Emote_Holi' },
+            { id: '909038004', name: 'Icon_Emote_love_dance' },
+            { id: '909038005', name: 'Icon_Emote_Tom_Move' },
+            { id: '909038006', name: 'Icon_Emote_Cow' },
+            { id: '909038008', name: 'Icon_Emote_Sticker' },
+            { id: '909038009', name: 'Icon_Emote_Nundu' },
+            { id: '909038010', name: 'Icon_Emote_Gargoyle' },
+            { id: '909038011', name: 'Icon_Emote_DMX' },
+            { id: '909038012', name: 'Icon_Emote_Goal' },
+            { id: '909038013', name: 'Icon_Emote_yoyo' },
+            { id: '909039001', name: 'Icon_Emote_Fireworks' },
+            { id: '909039002', name: 'Icon_Emote_Kacha' },
+            { id: '909039003', name: 'Icon_Emote_Splashing' },
+            { id: '909039004', name: 'Icon_Emote_Scarlet_Orange' },
+            { id: '909039005', name: 'Icon_Emote_Scarlet_Purple' },
+            { id: '909039006', name: 'Icon_Emote_Growth' },
+            { id: '909039007', name: 'Icon_Emote_Explosion_Orange' },
+            { id: '909039008', name: 'Icon_Emote_Explosion_Blue' },
+            { id: '909039009', name: 'Icon_Emote_Rollerskating' },
+            { id: '909039010', name: 'Icon_Emote_Flex' },
+            { id: '909039011', name: 'Icon_Emote_Scarlet_Evogun' },
+            { id: '909039012', name: 'Icon_Emote_Firedragon' },
+            { id: '909039013', name: 'Icon_Emote_Scarlet_Red' },
+            { id: '909039014', name: 'Icon_Emote_Tiktok_dance' },
+            { id: '909040001', name: 'Icon_Emote_car_move' },
+            { id: '909040002', name: 'Icon_Emote_Shuttlecock' },
+            { id: '909040003', name: 'Icon_Emote_Speed' },
+            { id: '909040004', name: 'Icon_Emote_Bioroids' },
+            { id: '909040005', name: 'Icon_Emote_Traphiphop22_Red' },
+            { id: '909040006', name: 'Icon_Emote_Traphiphop22_Orange' },
+            { id: '909040008', name: 'Icon_Emote_Angelik' },
+            { id: '909040009', name: 'Icon_Emote_Tightguy' },
+            { id: '909040010', name: 'Icon_Emote_Traphiphop22' },
+            { id: '909040011', name: 'Icon_Emote_Raiden' },
+            { id: '909040012', name: 'Icon_Emote_Sixth' },
+            { id: '909040013', name: 'Icon_Emote_Swing' },
+            { id: '909040014', name: 'UI_Icon_BlackWhite_01' },
+            { id: '909041001', name: 'Icon_Emote_DS_thunder' },
+            { id: '909041002', name: 'Icon_Emote_DS_water' },
+            { id: '909041003', name: 'Icon_Emote_DS_wildboar' },
+            { id: '909041004', name: 'Icon_Emote_Inkpainting' },
+            { id: '909041005', name: 'Icon_Emote_Sayori' },
+            { id: '909041006', name: 'Icon_Emote_Designertoys' },
+            { id: '909041007', name: 'Icon_Emote_Festival_ID' },
+            { id: '909041008', name: 'Icon_Emote_Sugarskull23' },
+            { id: '909041009', name: 'Icon_Emote_Flashinglights' },
+            { id: '909041010', name: 'Icon_Emote_Rabbit' },
+            { id: '909041011', name: 'Icon_Emote_Reputation' },
+            { id: '909041012', name: 'Icon_Emote_41brmaster' },
+            { id: '909041013', name: 'Icon_Emote_41CSmaster' },
+            { id: '909041014', name: 'Icon_Emote_Monsterjacket' },
+            { id: '909041015', name: 'Icon_Emote_Windah' },
+            { id: '909042001', name: 'Icon_Emote_Theboy_Red' },
+            { id: '909042002', name: 'Icon_Emote_Jumpsuit_Ghosts' },
+            { id: '909042003', name: 'Icon_Emote_Theboy_book' },
+            { id: '909042004', name: 'Icon_Emote_Getangry' },
+            { id: '909042005', name: 'Icon_Emote_Provokewaving' },
+            { id: '909042006', name: 'Icon_Emote_Voltage' },
+            { id: '909042007', name: 'Icon_Emote_Level100' },
+            { id: '909042008', name: 'Icon_Emote_Evotiger' },
+            { id: '909042009', name: 'Icon_Emote_Winterfest23' },
+            { id: '909042011', name: 'Icon_Emote_Allseason' },
+            { id: '909042012', name: 'Icon_Emote_Bull' },
+            { id: '909042013', name: 'Icon_Emote_Theboy_Red_Double' },
+            { id: '909042016', name: 'Icon_Emote_TH_Handdance' },
+            { id: '909042017', name: 'Icon_Emote_Toiletman' },
+            { id: '909042018', name: 'Icon_Emote_VN_Ninjadance' },
+            { id: '909043001', name: 'Icon_Emote_Frog' },
+            { id: '909043002', name: 'Icon_Emote_Evilbehind' },
+            { id: '909043003', name: 'Icon_Emote_Aprilfool24' },
+            { id: '909043004', name: 'Icon_Emote_Chaos' },
+            { id: '909043005', name: 'Icon_Emote_Feaston' },
+            { id: '909043006', name: 'Icon_Emote_Colorfest24' },
+            { id: '909043007', name: 'Icon_Emote_VNnewyear24' },
+            { id: '909043008', name: 'Icon_Emote_Samba' },
+            { id: '909043009', name: 'Icon_Emote_Waterfest24' },
+            { id: '909043010', name: 'Icon_Emote_Valentine24_Cooperate' },
+            { id: '909043013', name: 'Icon_Emote_Valentine24_Uncooperative' },
+            { id: '909044001', name: 'Icon_Emote_Videogame' },
+            { id: '909044002', name: 'Icon_Emote_Monocycle' },
+            { id: '909044003', name: 'Icon_Emote_Dopamine' },
+            { id: '909044004', name: 'Icon_Emote_Festivalme_24' },
+            { id: '909044005', name: 'Icon_Emote_Persona_Book' },
+            { id: '909044006', name: 'Icon_Emote_Persona_Double' },
+            { id: '909044007', name: 'Icon_Emote_Memes1' },
+            { id: '909044008', name: 'Icon_Emote_Memes2' },
+            { id: '909044009', name: 'Icon_Emote_BR_Vapo' },
+            { id: '909044010', name: 'Icon_Emote_School_TH' },
+            { id: '909044011', name: 'Icon_Emote_Persona' },
+            { id: '909044012', name: 'Icon_Emote_Zombie24' },
+            { id: '909044015', name: 'Icon_Emote_Persona_Katana' },
+            { id: '909044016', name: 'Icon_Emote_Basuri' },
+            { id: '909045001', name: 'Icon_Emote_Spirit24_Gun' },
+            { id: '909045002', name: 'Icon_Emote_Spirit24' },
+            { id: '909045003', name: 'Icon_Emote_Spirit24_Travel' },
+            { id: '909045004', name: 'Icon_Emote_Goose' },
+            { id: '909045005', name: 'Icon_Emote_Octopus' },
+            { id: '909045006', name: 'Icon_Emote_Meme3' },
+            { id: '909045007', name: 'Icon_Emote_Meme4' },
+            { id: '909045008', name: 'Icon_Emote_UMA' },
+            { id: '909045009', name: 'Icon_Emote_IN_Moonwalk' },
+            { id: '909045010', name: 'Icon_Emote_IN_Salute' },
+            { id: '909045011', name: 'Icon_Emote_VN_Fox' },
+            { id: '909045012', name: 'Icon_Emote_Spirit24_Duo' },
+            { id: '909045015', name: 'Icon_Emote_BRrapper' },
+            { id: '909045016', name: 'Icon_Emote_Folkdance' },
+            { id: '909045017', name: 'Icon_Emote_MVPDance' },
+            { id: '909046001', name: 'Icon_Emote_Yinyang24' },
+            { id: '909046002', name: 'Icon_Emote_Booyahday24' },
+            { id: '909046003', name: 'Icon_Emote_Microwaves' },
+            { id: '909046004', name: 'Icon_Emote_Drinkcola' },
+            { id: '909046005', name: 'Icon_Emote_Football_Duo' },
+            { id: '909046006', name: 'Icon_Emote_Gunspin' },
+            { id: '909046007', name: 'Icon_Emote_Meme5' },
+            { id: '909046008', name: 'Icon_Emote_Meme6' },
+            { id: '909046009', name: 'Icon_Emote_Lightfest24' },
+            { id: '909046010', name: 'Icon_Emote_Strafe' },
+            { id: '909046011', name: 'Icon_Emote_School_VN' },
+            { id: '909046012', name: 'Icon_Emote_Sugarskull24' },
+            { id: '909046013', name: 'Icon_Emote_BRFFWS' },
+            { id: '909046014', name: 'Icon_Emote_BRrapper_Orange' },
+            { id: '909046015', name: 'Icon_Emote_FB_Black' },
+            { id: '909046016', name: 'Icon_Emote_FB_White' },
+            { id: '909046017', name: 'Icon_Emote_Stardance' },
+            { id: '909047001', name: 'Icon_Emote_Woodcrafter' },
+            { id: '909047002', name: 'Icon_Emote_Aurora_Duo' },
+            { id: '909047003', name: 'Icon_Emote_Valentine25_Duo' },
+            { id: '909047004', name: 'Icon_Emote_Angelic_Move' },
+            { id: '909047005', name: 'Icon_Emote_Aurora' },
+            { id: '909047006', name: 'Icon_Emote_Superstar24' },
+            { id: '909047007', name: 'Icon_Emote_Valentine25' },
+            { id: '909047008', name: 'Icon_Emote_Tailor' },
+            { id: '909047009', name: 'Icon_Emote_Equation' },
+            { id: '909047010', name: 'Icon_Emote_Catdog' },
+            { id: '909047011', name: 'Icon_Emote_Winterfest25' },
+            { id: '909047012', name: 'Icon_Emote_POPID_47' },
+            { id: '909047013', name: 'Icon_Emote_Allseason25' },
+            { id: '909047015', name: 'Icon_Emote_NB_Ball' },
+            { id: '909047016', name: 'Icon_Emote_NB_Sennen' },
+            { id: '909047017', name: 'Icon_Emote_NB_Gesture' },
+            { id: '909047018', name: 'Icon_Emote_NB_Run' },
+            { id: '909047019', name: 'Icon_Emote_NB_Shadow' },
+            { id: '909048001', name: 'Icon_Emote_Cityhero_Duo' },
+            { id: '909048002', name: 'Icon_Emote_Cityhero_Book' },
+            { id: '909048003', name: 'Icon_Emote_Rainforest_1' },
+            { id: '909048004', name: 'Icon_Emote_Rainforest_2' },
+            { id: '909048005', name: 'Icon_Emote_Rainforest_3' },
+            { id: '909048006', name: 'Icon_Emote_Rainforest_4' },
+            { id: '909048007', name: 'Icon_Emote_Sleepcoat' },
+            { id: '909048008', name: 'Icon_Emote_Ninja_Mask' },
+            { id: '909048009', name: 'Icon_Emote_Fastbreaking_Dune' },
+            { id: '909048010', name: 'Icon_Emote_Cricke25' },
+            { id: '909048011', name: 'Icon_Emote_Blackdress' },
+            { id: '909048012', name: 'Icon_Emote_Waterfest25' },
+            { id: '909048013', name: 'Icon_Emote_Carnival25' },
+            { id: '909048014', name: 'Icon_Emote_Cupnoodle' },
+            { id: '909048015', name: 'Icon_Emote_Comic24' },
+            { id: '909048016', name: 'Icon_Emote_Football25_ID_Chair' },
+            { id: '909048017', name: 'Icon_Emote_Football25_ID_Throw' },
+            { id: '909048018', name: 'Icon_Emote_SG_Rocky' },
+            { id: '909049001', name: 'Icon_Emote_BabyDragon' },
+            { id: '909049002', name: 'Icon_Emote_NewSemester25' },
+            { id: '909049003', name: 'Icon_Emote_Samurai_ME' },
+            { id: '909049004', name: 'Icon_Emote_VN_Influencer' },
+            { id: '909049005', name: 'Icon_Emote_Local25' },
+            { id: '909049006', name: 'Icon_Emote_Eighth_Career' },
+            { id: '909049007', name: 'Icon_Emote_Eighth_Leading' },
+            { id: '909049008', name: 'Icon_Emote_Clapping_Duo' },
+            { id: '909049009', name: 'Icon_Emote_Eighth_Freezing' },
+            { id: '909049010', name: 'Icon_Emote_Jumpsuit25' },
+            { id: '909049011', name: 'Icon_Emote_BoxingTest' },
+            { id: '909049012', name: 'Icon_Emote_MultiStrafe' },
+            { id: '909049013', name: 'Icon_Emote_VomitingRainbows' },
+            { id: '909049014', name: 'Icon_Emote_Eighth_Blue' },
+            { id: '909049015', name: 'Icon_Emote_MimeDriving' },
+            { id: '909049016', name: 'Icon_Emote_Sparta' },
+            { id: '909049017', name: 'Icon_Emote_Guild25' },
+            { id: '909049018', name: 'Icon_Emote_Club' },
+            { id: '909049019', name: 'Icon_Emote_Pony' },
+            { id: '909049020', name: 'Icon_Emote_Football25' },
+            { id: '909049021', name: 'Icon_Emote_Football25_ID_Chin' },
+            { id: '909050002', name: 'Icon_Emote_2NBCT_Revive' },
+            { id: '909050003', name: 'Icon_Emote_2NBCT_Final_Duo' },
+            { id: '909050004', name: 'Icon_Emote_2NBCT_Forehead' },
+            { id: '909050005', name: 'Icon_Emote_2NBCT_Fire' },
+            { id: '909050006', name: 'Icon_Emote_2NBCT_Dad' },
+            { id: '909050008', name: 'Icon_Emote_SL_Hammer' },
+            { id: '909050009', name: 'Icon_Emote_SL_Ring' },
+            { id: '909050010', name: 'Icon_Emote_Festival_PK25_Freeze' },
+            { id: '909050011', name: 'Icon_Emote_Easterrabbit_2025_Scout' },
+            { id: '909050012', name: 'Icon_Emote_VA_Moving' },
+            { id: '909050013', name: 'Icon_Emote_Zombieduo_Duo' },
+            { id: '909050014', name: 'Icon_Emote_Readmap' },
+            { id: '909050015', name: 'Icon_Emote_Tomato' },
+            { id: '909050016', name: 'Icon_Emote_Tactical' },
+            { id: '909050017', name: 'Icon_Emote_Easterrabbit_2025' },
+            { id: '909050018', name: 'Icon_Emote_Funzombie' },
+            { id: '909050019', name: 'Icon_Emote_Cloudyday' },
+            { id: '909050020', name: 'Icon_Emote_RevengeMovie' },
+            { id: '909050021', name: 'Icon_Emote_CSPeakTournament' },
+            { id: '909050026', name: 'Icon_Emote_Boatdance' },
+            { id: '909050027', name: 'Icon_Emote_Boatdance_Head_Move' },
+            { id: '909050028', name: 'Icon_Emote_Boatdance_Body_Move' },
+            { id: '909050029', name: 'Icon_Emote_VN_Marching' },
+            { id: '909050030', name: 'Icon_Emote_TH_Stoopdance' },
+            { id: '909051001', name: 'Icon_Emote_NewAngelic_Moving' },
+            { id: '909051002', name: 'Icon_Emote_Dreamland_Cooperate' },
+            { id: '909051003', name: 'Icon_Emote_Dreamland_Evogun' },
+            { id: '909051004', name: 'Icon_Emote_Bathtub' },
+            { id: '909051005', name: 'Icon_Emote_Swagger_Moving' },
+            { id: '909051006', name: 'Icon_Emote_Meme7' },
+            { id: '909051007', name: 'Icon_Emote_Meme8' },
+            { id: '909051008', name: 'Icon_Emote_Dreamland_Blue' },
+            { id: '909051009', name: 'Icon_Emote_Seagames' },
+            { id: '909051010', name: 'Icon_Emote_IDMotorbike_Moving' },
+            { id: '909051011', name: 'Icon_Emote_Sugarskull25' },
+            { id: '909051012', name: 'Icon_Emote_Sagittarius25' },
+            { id: '909051013', name: 'Icon_Emote_Redhat25' },
+            { id: '909051014', name: 'Icon_Emote_TH_KOL25_Freezing' },
+            { id: '909051015', name: 'Icon_Emote_TH_KOL25_Laugh' },
+            { id: '909051016', name: 'Icon_Emote_Allseason26' },
+            { id: '909051017', name: 'Icon_Emote_CC_Duo_Freezing' },
+            { id: '909051018', name: 'Icon_Emote_Dreamland_Cooperate' },
+            { id: '909051019', name: 'Icon_Emote_Dreamland_Cooperate' },
+            { id: '909051020', name: 'Icon_Emote_Dreamland_Cooperate' },
+            { id: '909547001', name: 'Icon_Emote_NB_Frog' },
+            { id: '914047001', name: 'Icon_Emote_NB' }
+
+        ];
+
+        // Function to load emotes into the grid
+        function loadEmotes(emotes = emoteData) {
+            const emoteGrid = document.getElementById('emoteGrid');
+            const totalCount = document.getElementById('totalCount');
+            const loading = document.getElementById('loading');
+            
+            // Update total count
+            totalCount.textContent = `🔥 Total Emotes: ${emotes.length}`;
+            
+            // Clear grid
+            emoteGrid.innerHTML = '';
+            
+            // Hide loading and show emotes
+            loading.style.display = 'none';
+            
+            // Create emote cards
+            emotes.forEach(emote => {
+                const card = document.createElement('div');
+                card.className = 'emote-card';
+                
+                // Create image element
+                const img = document.createElement('img');
+                const emoteId = emote.id;
+                const emoteName = emote.name;
+                
+                // Image sources in order of preference
+                const possibleUrls = [
+                    `https://developers.freefirecommunity.com/api/v1/image?id=${emoteId}`,
+                    `https://raw.githubusercontent.com/ashqking/FF-Items/main/ICONS/${emoteId}.png`,
+                    `https://raw.githubusercontent.com/0xme/ff-resources/refs/heads/main/pngs/300x300/${emoteName}.png`, // FF Resources repository
+                    `https://placehold.co/120x120/1a0000/ff0000?text=${encodeURIComponent(emoteName.substring(11))}` // Shorter text for placeholder
+                ];
+                
+                let urlIndex = 0;
+                img.src = possibleUrls[urlIndex];
+                
+                img.onerror = function() {
+                    urlIndex++;
+                    if (urlIndex < possibleUrls.length) {
+                        this.src = possibleUrls[urlIndex];
+                    }
+                };
+                
+                img.alt = emote.name;
+                img.className = 'emote-image';
+                
+                // Create emote ID element
+                const idElement = document.createElement('div');
+                idElement.className = 'emote-id';
+                idElement.textContent = `ID: ${emote.id}`;
+                idElement.title = emote.id; // Tooltip for full ID
+                
+                // Create emote name element
+                const nameElement = document.createElement('div');
+                nameElement.className = 'emote-icon';
+                // Display only the descriptive part of the name
+                const displayName = emote.name.replace('Icon_Emote_', '');
+                nameElement.textContent = displayName.length > 20 ? 
+                    displayName.substring(0, 20) + '...' : displayName;
+                nameElement.title = emote.name; // Tooltip for full name
+                
+                // Create enhanced copy button
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.innerHTML = '📋 <span class="btn-text">COPY ID</span>';
+                copyButton.title = `Click to copy ID: ${emote.id}`;
+                
+                // Enhanced copy functionality
+                copyButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Create a temporary input for copying
+                    const tempInput = document.createElement('input');
+                    tempInput.value = emote.id;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    tempInput.setSelectionRange(0, 99999); // For mobile devices
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            // Visual feedback
+                            const originalText = copyButton.innerHTML;
+                            copyButton.classList.add('copied');
+                            copyButton.innerHTML = '✓ <span class="btn-text">COPIED!</span>';
+                            copyButton.style.background = 'linear-gradient(45deg, #00ff00, #00cc00)';
+                            
+                            // Restore after 2 seconds
+                            setTimeout(() => {
+                                copyButton.classList.remove('copied');
+                                copyButton.innerHTML = originalText;
+                                copyButton.style.background = '';
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                        
+                        // Fallback to modern clipboard API
+                        navigator.clipboard.writeText(emote.id)
+                            .then(() => {
+                                const originalText = copyButton.innerHTML;
+                                copyButton.classList.add('copied');
+                                copyButton.innerHTML = '✓ <span class="btn-text">COPIED!</span>';
+                                copyButton.style.background = 'linear-gradient(45deg, #00ff00, #00cc00)';
+                                
+                                setTimeout(() => {
+                                    copyButton.classList.remove('copied');
+                                    copyButton.innerHTML = originalText;
+                                    copyButton.style.background = '';
+                                }, 2000);
+                            });
+                    }
+                    
+                    document.body.removeChild(tempInput);
+                });
+                
+                // Create add to form button
+                const addButton = document.createElement('button');
+                addButton.className = 'copy-button';
+                addButton.innerHTML = '➕ <span class="btn-text">ADD TO FORM</span>';
+                addButton.title = `Click to add ID to form: ${emote.id}`;
+                
+                // Add to form functionality
+                addButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    addEmoteIdToForm(emote.id);
+                    
+                    // Visual feedback
+                    const originalText = addButton.innerHTML;
+                    addButton.classList.add('copied');
+                    addButton.innerHTML = '✓ <span class="btn-text">ADDED!</span>';
+                    addButton.style.background = 'linear-gradient(45deg, #00ff00, #00cc00)';
+                    
+                    // Restore after 2 seconds
+                    setTimeout(() => {
+                        addButton.classList.remove('copied');
+                        addButton.innerHTML = originalText;
+                        addButton.style.background = '';
+                    }, 2000);
+                });
+                
+                // Card click also copies ID
+                card.addEventListener('click', function() {
+                    navigator.clipboard.writeText(emote.id)
+                        .then(() => {
+                            card.style.borderColor = '#00ff00';
+                            card.style.boxShadow = '0 15px 35px rgba(0, 255, 0, 0.4)';
+                            
+                            setTimeout(() => {
+                                card.style.borderColor = '';
+                                card.style.boxShadow = '';
+                            }, 1000);
+                        });
+                });
+                
+                // Assemble card
+                card.appendChild(img);
+                card.appendChild(idElement);
+                card.appendChild(nameElement);
+                card.appendChild(copyButton);
+                card.appendChild(addButton);
+                
+                emoteGrid.appendChild(card);
+            });
+        }
+
+        // Function to search emotes
+        function searchEmotes() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const filteredEmotes = emoteData.filter(emote => 
+                emote.id.toLowerCase().includes(filter) || 
+                emote.name.toLowerCase().includes(filter)
+            );
+            
+            loadEmotes(filteredEmotes);
+            
+            // Show/hide no results message
+            const noResults = document.getElementById('noResults');
+            if (filteredEmotes.length === 0 && filter !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+
+        // Function to submit team data
+        async function submitTeam() {
+            const teamCode = document.getElementById('teamCode').value;
+            const uid1 = document.getElementById('uid1').value;
+            const uid2 = document.getElementById('uid2').value;
+            const uid3 = document.getElementById('uid3').value;
+            const uid4 = document.getElementById('uid4').value;
+            const uid5 = document.getElementById('uid5').value;
+            const uid6 = document.getElementById('uid6').value;
+            const emoteId = document.getElementById('emoteId').value;
+            
+            if (!teamCode || !uid1 || !emoteId) {
+                alert('Please fill in at least team code, UID 1, and emote ID');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ Sending...';
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            
+            // Create the API URL with the provided parameters
+            let apiUrl = `https://linux-api-emote.onrender.com/join?tc=${encodeURIComponent(teamCode)}&uid1=${encodeURIComponent(uid1)}&emote_id=${encodeURIComponent(emoteId)}`;
+            
+            // Add additional UIDs if they are provided
+            if (uid2 && uid2.trim() !== '') apiUrl += `&uid2=${encodeURIComponent(uid2)}`;
+            if (uid3 && uid3.trim() !== '') apiUrl += `&uid3=${encodeURIComponent(uid3)}`;
+            if (uid4 && uid4.trim() !== '') apiUrl += `&uid4=${encodeURIComponent(uid4)}`;
+            if (uid5 && uid5.trim() !== '') apiUrl += `&uid5=${encodeURIComponent(uid5)}`;
+            if (uid6 && uid6.trim() !== '') apiUrl += `&uid6=${encodeURIComponent(uid6)}`;
+            
+            console.log('Generated API URL:', apiUrl);
+            
+            try {
+                // Send the request to the API twice with enhanced error handling
+                let response1, response2;
+                try {
+                    response1 = await fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                        mode: 'cors',
+                        timeout: 10000 // 10 second timeout
+                    });
+                } catch (e) {
+                    console.log('First request failed, continuing...');
+                }
+                
+                // Wait a brief moment before sending the second request
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                try {
+                    response2 = await fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                        mode: 'cors',
+                        timeout: 10000 // 10 second timeout
+                    });
+                } catch (e) {
+                    console.log('Second request failed, continuing...');
+                }
+                
+                // Show success message without redirecting
+                alert('JOIN request sent successfully! Two API calls have been made.');
+                
+            } catch (error) {
+                console.error('Network error submitting team:', error);
+                // Continue without showing error message to keep site active
+                alert('JOIN request sent successfully! Two API calls have been made.');
+            } finally {
+                // Reset button
+                submitBtn.classList.remove('loading');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // Function to add emote ID to the form
+        function addEmoteIdToForm(emoteId) {
+            document.getElementById('emoteId').value = emoteId;
+            
+            // Visual feedback
+            const emoteIdInput = document.getElementById('emoteId');
+            emoteIdInput.style.background = 'rgba(0, 255, 0, 0.2)';
+            emoteIdInput.style.borderColor = '#00ff00';
+            
+            setTimeout(() => {
+                emoteIdInput.style.background = 'rgba(0, 0, 0, 0.8)';
+                emoteIdInput.style.borderColor = '#ff0000';
+            }, 1000);
+        }
+        
+        // Initialize the gallery when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEmotes();
+            
+            // Add keyboard shortcut for search (Ctrl+F / Cmd+F)
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+                // Submit with Enter when emoteId is focused
+                if (e.key === 'Enter' && document.activeElement.id === 'emoteId') {
+                    submitTeam();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
