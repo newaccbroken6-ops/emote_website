@@ -1,0 +1,17 @@
+{
+  "name": "free-fire-emotes-gallery",
+  "version": "1.0.0",
+  "description": "A Free Fire emotes gallery with search functionality",
+  "main": "emote_gallery.html",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Build completed'",
+    "start": "node server.js"
+  },
+  "keywords": ["free-fire", "emotes", "gallery", "gaming"],
+  "author": "LINUX",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
