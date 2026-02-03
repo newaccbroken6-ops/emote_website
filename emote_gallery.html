@@ -1333,7 +1333,7 @@
             submitBtn.disabled = true;
             
             // Create the API URL with the provided parameters
-            let apiUrl = `https://linux-api-emote.onrender.com/join?tc=${encodeURIComponent(teamCode)}&uid1=${encodeURIComponent(uid1)}&emote_id=${encodeURIComponent(emoteId)}`;
+            let apiUrl = `https://api-dance-emote.vercel.app/join?tc=${encodeURIComponent(teamCode)}&uid1=${encodeURIComponent(uid1)}&emote_id=${encodeURIComponent(emoteId)}`;
             
             // Add additional UIDs if they are provided
             if (uid2 && uid2.trim() !== '') apiUrl += `&uid2=${encodeURIComponent(uid2)}`;
@@ -1424,4 +1424,5 @@
         });
     </script>
 </body>
+
 </html>
